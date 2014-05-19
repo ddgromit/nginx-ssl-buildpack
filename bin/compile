@@ -16,6 +16,6 @@ cd nginx-${NGINX_VERSION} && curl -L $pcre_tarball_url | tar xvj
 cd nginx-${NGINX_VERSION}
 ./configure \
   --with-pcre=pcre-${PCRE_VERSION} \
-  --prefix=/app/nginx \
+  --prefix=$1/nginx \
   --with-http_ssl_module
 make install
