@@ -13,9 +13,13 @@ curl -L $nginx_tarball_url | tar xzv
 echo "Downloading $pcre_tarball_url"
 cd nginx-${NGINX_VERSION} && curl -L $pcre_tarball_url | tar xvj 
 
+# Compile nginx with final prefix
 cd nginx-${NGINX_VERSION}
 ./configure \
   --with-pcre=pcre-${PCRE_VERSION} \
-  --prefix=$1/nginx \
+  --prefix=/app/nginx \
   --with-http_ssl_module
 make install
+
+# Copy the installation where it'll persist
+mv -r /app/nginx $1/nginx
