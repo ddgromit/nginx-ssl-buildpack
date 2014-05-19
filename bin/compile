@@ -26,4 +26,4 @@ mv /app/nginx $1/nginx
 
 # Add to PATH
 mkdir -p $1/.profile.d
-echo 'PATH=$PATH:$HOME/nginx/sbin/nginx' > $1/.profile.d/nginx_path.sh
+echo 'PATH=$PATH:$HOME/nginx/sbin' > $1/.profile.d/nginx_path.sh
