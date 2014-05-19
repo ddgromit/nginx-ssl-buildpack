@@ -22,4 +22,4 @@ cd nginx-${NGINX_VERSION}
 make install
 
 # Copy the installation where it'll persist
-mv -r /app/nginx $1/nginx
+mv /app/nginx $1/nginx
