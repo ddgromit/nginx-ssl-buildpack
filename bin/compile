@@ -29,7 +29,7 @@ status "Compiling nginx"
   --with-pcre=pcre-${PCRE_VERSION} \
   --prefix=/app/nginx \
   --with-http_ssl_module \
-  --silent
+  --enable-silent-rules
 
 status "Installing nginx"
 make install --silent
