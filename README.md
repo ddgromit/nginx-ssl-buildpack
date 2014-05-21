@@ -1,27 +1,22 @@
-Heroku Buildpack for Nginx with SSL Support
+Heroku Buildpack for Nginx + SSL
 ============================
 
-This buildpack gives your app access to the the `nginx` command.
+This buildpack gives your app access to the `nginx` command compiled with SSL support.
 
 
 Features
 ------
 
-* Downloads and compiles Nginx 1.5.7 with PCRE support
+* Downloads and compiles Nginx 1.5.7 with PCRE
 * SSL support via `--with-http_ssl_module`
 * Adds `nginx` to your app's PATH
 * Additional files (mime.types, example configs, etc) are available at `$HOME/nginx` if you need them.
 * Your app must generate `nginx.conf` and run `nginx` itself (explained below) 
 
-What it *does not* do:
-
-* log redirection to `heroku logs`
-* start nginx for you
-
 Usage
 ------
 
-Check out a functional "hello world" example app at [nginx-ssl-buildpack-example](https://github.com/ddgromit/nginx-ssl-buildpack-example).
+You can check out a complete "hello world" example app at [nginx-ssl-buildpack-example](https://github.com/ddgromit/nginx-ssl-buildpack-example).
 
 ```ruby
 # Create your app if you haven't already
@@ -29,14 +24,11 @@ heroku create
 
 # Set the buildpack URL
 heroku config:set BUILDPACK_URL=https://github.com/ddgromit/nginx-ssl-buildpack
-
 ```
 
-After adding the buildpack, `nginx` will be available on your path.  It is the responsibility of your app and it's `Procfile` to call nginx with a `nginx.conf` that you've generated.
+After adding the buildpack, `nginx` will be available on your path.  It is the responsibility of your app and it's `Procfile` to call nginx with a `nginx.conf` that you've generated.  **You must generate nginx.conf yourself** because what port you're using depends on the `PORT` environment variable, which is different on every app.
 
-**You must generate nginx.conf yourself** because what port you're using depends on the `PORT` environment variable, which is different on every app.
-
-nginx.conf
+### nginx.conf example
 
 ```Nginx
 worker_processes <%= ENV['NGINX_WORKERS'] || 4 %>;
@@ -58,7 +50,7 @@ http {
 }
 ```
 
-Procfile
+### Procfile example
 
 ```
 web: erb nginx.conf.erb > nginx.conf && nginx -c $HOME/nginx.conf
