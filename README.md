@@ -18,6 +18,8 @@ Usage
 
 You can check out a complete "hello world" example app at [nginx-ssl-buildpack-example](https://github.com/ddgromit/nginx-ssl-buildpack-example).
 
+### Creating a new app with this buildpack
+
 ```ruby
 # Create your app if you haven't already
 heroku create
@@ -26,9 +28,22 @@ heroku create
 heroku config:set BUILDPACK_URL=https://github.com/ddgromit/nginx-ssl-buildpack
 ```
 
-After adding the buildpack, `nginx` will be available on your path.  It is the responsibility of your app and it's `Procfile` to call nginx with a `nginx.conf` that you've generated.  **You must generate nginx.conf yourself** because what port you're using depends on the `PORT` environment variable, which is different on every app.
+After adding the buildpack, `nginx` will be available on your path.  It is the responsibility of your app and it's `Procfile` to call nginx with a `nginx.conf` that you've generated. 
 
-### nginx.conf example
+ **You must generate nginx.conf yourself** because what port you're using depends on the `PORT` environment variable, which is different on every app.
+
+
+### Procfile example
+
+Here we use ERB to generate a nginx.conf at dyno start time.
+
+```
+web: erb nginx.conf.erb > nginx.conf && nginx -c $HOME/nginx.conf
+```
+
+### nginx.conf.erb example
+
+The nginx.conf.erb can access environment variables like the port it needs to use.
 
 ```Nginx
 worker_processes <%= ENV['NGINX_WORKERS'] || 4 %>;
@@ -48,12 +63,6 @@ http {
     }
   }
 }
-```
-
-### Procfile example
-
-```
-web: erb nginx.conf.erb > nginx.conf && nginx -c $HOME/nginx.conf
 ```
 
 
