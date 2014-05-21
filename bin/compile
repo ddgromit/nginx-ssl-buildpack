@@ -28,10 +28,11 @@ status "Compiling nginx"
 ./configure \
   --with-pcre=pcre-${PCRE_VERSION} \
   --prefix=/app/nginx \
-  --with-http_ssl_module
+  --with-http_ssl_module \
+  --silent
 
 status "Installing nginx"
-make install
+make install --silent
 
 # Copy the installation where it'll persist
 mv /app/nginx $build_dir/nginx
